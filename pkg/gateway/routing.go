@@ -8,8 +8,9 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
-	"github.com/gladiusio/gladius-common/pkg/handlers"
-	"github.com/gladiusio/gladius-controld/pkg/p2p/peer"
+	chandlers "github.com/gladiusio/gladius-common/pkg/handlers"
+	lhandlers "github.com/gladiusio/gladius-network-gateway/pkg/gateway/handlers"
+	"github.com/gladiusio/gladius-p2p/pkg/p2p/peer"
 	"github.com/gorilla/mux"
 )
 
@@ -54,70 +55,70 @@ func (g *Gateway) addMiddleware() {
 func (g *Gateway) addRoutes() {
 	// Create a base router with "/api"
 	baseRouter := g.router.PathPrefix("/api").Subrouter().StrictSlash(true)
-	baseRouter.NotFoundHandler = http.HandlerFunc(handlers.NotFoundHandler)
+	baseRouter.NotFoundHandler = http.HandlerFunc(chandlers.NotFoundHandler)
 
 	peerStruct := peer.New(g.ga)
 	p2pRouter := baseRouter.PathPrefix("/p2p").Subrouter().StrictSlash(true)
 	// P2P Message Routes
-	p2pRouter.HandleFunc("/message/sign", handlers.CreateSignedMessageHandler(g.ga)).
+	p2pRouter.HandleFunc("/message/sign", chandlers.CreateSignedMessageHandler(g.ga)).
 		Methods(http.MethodPost)
-	p2pRouter.HandleFunc("/message/verify", handlers.VerifySignedMessageHandler).
+	p2pRouter.HandleFunc("/message/verify", chandlers.VerifySignedMessageHandler).
 		Methods("POST")
-	p2pRouter.HandleFunc("/network/join", handlers.JoinHandler(peerStruct)).
+	p2pRouter.HandleFunc("/network/join", chandlers.JoinHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/network/leave", handlers.LeaveHandler(peerStruct)).
+	p2pRouter.HandleFunc("/network/leave", chandlers.LeaveHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/state/push_message", handlers.PushStateMessageHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/push_message", chandlers.PushStateMessageHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/state", handlers.GetFullStateHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state", chandlers.GetFullStateHandler(peerStruct)).
 		Methods("GET")
-	p2pRouter.HandleFunc("/state/node/{node_address}", handlers.GetNodeStateHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/node/{node_address}", chandlers.GetNodeStateHandler(peerStruct)).
 		Methods("GET")
-	p2pRouter.HandleFunc("/state/signatures", handlers.GetSignatureListHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/signatures", chandlers.GetSignatureListHandler(peerStruct)).
 		Methods("GET")
-	p2pRouter.HandleFunc("/state/content_diff", handlers.GetContentNeededHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/content_diff", chandlers.GetContentNeededHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/state/content_links", handlers.GetContentLinksHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/content_links", chandlers.GetContentLinksHandler(peerStruct)).
 		Methods("POST")
 
 	// Only enable for testing
 	if viper.GetBool("NodeManager.Config.Debug") {
-		p2pRouter.HandleFunc("/state/set_state", handlers.SetStateDebugHandler(peerStruct)).
+		p2pRouter.HandleFunc("/state/set_state", chandlers.SetStateDebugHandler(peerStruct)).
 			Methods("POST")
 	}
 
 	// Blockchain account management endpoints
 	accountRouter := baseRouter.PathPrefix("/account/{address:0[xX][0-9a-fA-F]{40}}").Subrouter().StrictSlash(true)
-	accountRouter.HandleFunc("/balance/{symbol:[a-z]{3}}", handlers.AccountBalanceHandler)
-	accountRouter.HandleFunc("/transactions", handlers.AccountTransactionsHandler).
+	accountRouter.HandleFunc("/balance/{symbol:[a-z]{3}}", chandlers.AccountBalanceHandler)
+	accountRouter.HandleFunc("/transactions", chandlers.AccountTransactionsHandler).
 		Methods(http.MethodPost)
 
 	// Local wallet management
 	walletRouter := baseRouter.PathPrefix("/keystore").Subrouter().StrictSlash(true)
-	walletRouter.HandleFunc("/account/create", handlers.KeystoreAccountCreationHandler(g.ga)).
+	walletRouter.HandleFunc("/account/create", chandlers.KeystoreAccountCreationHandler(g.ga)).
 		Methods(http.MethodPost)
-	walletRouter.HandleFunc("/account", handlers.KeystoreAccountRetrievalHandler(g.ga))
-	walletRouter.HandleFunc("/account/open", handlers.KeystoreAccountUnlockHandler(g.ga)).
+	walletRouter.HandleFunc("/account", chandlers.KeystoreAccountRetrievalHandler(g.ga))
+	walletRouter.HandleFunc("/account/open", chandlers.KeystoreAccountUnlockHandler(g.ga)).
 		Methods(http.MethodPost)
 
 	// Transaction status endpoints
 	statusRouter := baseRouter.PathPrefix("/status").Subrouter().StrictSlash(true)
-	statusRouter.HandleFunc("/", handlers.StatusHandler).
+	statusRouter.HandleFunc("/", chandlers.StatusHandler).
 		Methods(http.MethodGet, http.MethodPut).
 		Name("status")
-	statusRouter.HandleFunc("/tx/{tx:0[xX][0-9a-fA-F]{64}}", handlers.StatusTxHandler).
+	statusRouter.HandleFunc("/tx/{tx:0[xX][0-9a-fA-F]{64}}", chandlers.StatusTxHandler).
 		Methods(http.MethodGet).
 		Name("status-tx")
 
 	// Node pool application routes
 	nodeApplicationRouter := baseRouter.PathPrefix("/node").Subrouter().StrictSlash(true)
 	// Node pool applications
-	nodeApplicationRouter.HandleFunc("/applications", handlers.NodeViewAllApplicationsHandler(g.ga)).
+	nodeApplicationRouter.HandleFunc("/applications", lhandlers.NodeViewAllApplicationsHandler(g.ga)).
 		Methods(http.MethodGet)
 	// Node application to Pool
-	nodeApplicationRouter.HandleFunc("/applications/{poolAddress:0[xX][0-9a-fA-F]{40}}/new", handlers.NodeNewApplicationHandler(g.ga)).
+	nodeApplicationRouter.HandleFunc("/applications/{poolAddress:0[xX][0-9a-fA-F]{40}}/new", lhandlers.NodeNewApplicationHandler(g.ga)).
 		Methods(http.MethodPost)
-	nodeApplicationRouter.HandleFunc("/applications/{poolAddress:0[xX][0-9a-fA-F]{40}}/view", handlers.NodeViewApplicationHandler(g.ga)).
+	nodeApplicationRouter.HandleFunc("/applications/{poolAddress:0[xX][0-9a-fA-F]{40}}/view", lhandlers.NodeViewApplicationHandler(g.ga)).
 		Methods(http.MethodGet)
 
 	// Pool listing routes
@@ -125,10 +126,10 @@ func (g *Gateway) addRoutes() {
 	// Retrieve owned Pool if available
 	poolRouter.HandleFunc("/", nil)
 	// Pool Retrieve Data
-	poolRouter.HandleFunc("/{poolAddress:0[xX][0-9a-fA-F]{40}}", handlers.PoolPublicDataHandler(g.ga)).
+	poolRouter.HandleFunc("/{poolAddress:0[xX][0-9a-fA-F]{40}}", chandlers.PoolPublicDataHandler(g.ga)).
 		Methods(http.MethodGet)
 
 	// Market Sub-Routes
 	marketRouter := baseRouter.PathPrefix("/market").Subrouter().StrictSlash(true)
-	marketRouter.HandleFunc("/pools", handlers.MarketPoolsHandler(g.ga))
+	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
 }
