@@ -4,7 +4,6 @@ require (
 	cloud.google.com/go v0.30.0 // indirect
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 // indirect
-	github.com/Netflix/go-expect v0.0.0-20180928190340-9d1f4485533b // indirect
 	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 // indirect
 	github.com/cespare/cp v1.0.0 // indirect
 	github.com/circonus-labs/circonus-gometrics v2.2.4+incompatible // indirect
@@ -16,7 +15,6 @@ require (
 	github.com/fjl/memsize v0.0.0-20180929194037-2a09253e352a // indirect
 	github.com/gladiusio/gladius-application-server v0.0.0-20180831154555-75ec8b96baa3
 	github.com/gladiusio/gladius-common v0.0.0-20181015195301-fb9f3e0bbb75
-	github.com/gladiusio/gladius-controld v0.0.0-20180831225039-43db901bd39d
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
 	github.com/go-sql-driver/mysql v1.4.0 // indirect
 	github.com/gogo/protobuf v1.1.1 // indirect
@@ -27,12 +25,10 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.0.0-20180718195005-e651d75abec6 // indirect
 	github.com/hashicorp/serf v0.8.1 // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
-	github.com/hinshun/vt10x v0.0.0-20180809195222-d55458df857c // indirect
 	github.com/huin/goupnp v0.0.0-20180415215157-1395d1447324 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.1 // indirect
 	github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae // indirect
 	github.com/karalabe/hid v0.0.0-20180420081245-2b4488a37358 // indirect
-	github.com/kr/pty v1.1.3 // indirect
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/onsi/gomega v1.4.2 // indirect
