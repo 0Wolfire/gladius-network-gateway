@@ -22,22 +22,22 @@ endif
 SRC_DIR=./cmd
 DST_DIR=./build
 
-CTL_SRC=$(SRC_DIR)/gladius-controld
-CTL_SRC_PROF=$(SRC_DIR)/gladius-controld-profiler
+CTL_SRC=$(SRC_DIR)/
+CTL_SRC_PROF=$(SRC_DIR)/gladius-network-gateway-profiler
 
-CTL_DEST=$(DST_DIR)/gladius-controld$(BINARY_SUFFIX)
+CTL_DEST=$(DST_DIR)/gladius-network-gateway$(BINARY_SUFFIX)
 
 # commands for go
-GOBUILD=go build
-GOTEST=go test
+GOBUILD=vgo build
+GOTEST=vgo test
 ##
 # MAKE TARGETS
 ##
 
 # general make targets
-all: controld
+all: network-gateway
 
-profile-enabled: controld-profile
+profile-enabled: network-gateway-profile
 
 clean:
 	rm -rf ./build/*
@@ -70,8 +70,8 @@ protobuf:
 	Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:. \
 	./pkg/p2p/peer/messages/*.proto
 
-controld: test
+network-gateway: test
 	$(GOBUILD) -o $(CTL_DEST) $(CTL_SRC)
 
-controld-profile: test
+network-gateway-profile: test
 	$(GOBUILD) -o $(CTL_DEST) $(CTL_SRC_PROF)
