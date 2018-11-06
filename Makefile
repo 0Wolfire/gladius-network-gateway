@@ -38,6 +38,7 @@ GOTEST=vgo test
 all: 
 	make clean
 	make dependencies
+	make lint
 	make network-gateway
 
 profile-enabled: network-gateway-profile
@@ -60,6 +61,9 @@ dependencies:
 	cp -r \
 	"${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
 	"vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
+
+lint:
+	gometalinter --linter='vet:go tool vet -printfuncs=Infof,Debugf,Warningf,Errorf:PATH:LINE:MESSAGE' cmd/main.go
 
 test: $(CTL_SRC)
 	$(GOTEST) $(CTL_SRC)
