@@ -35,7 +35,10 @@ GOTEST=vgo test
 ##
 
 # general make targets
-all: network-gateway
+all: 
+	make clean
+	make dependencies
+	make network-gateway
 
 profile-enabled: network-gateway-profile
 
