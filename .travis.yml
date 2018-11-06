@@ -11,4 +11,5 @@ before_install:
 install:
   - gometalinter.v2 --install
 before_script:
+  - make dependencies
   - make lint || true
