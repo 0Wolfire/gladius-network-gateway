@@ -9,8 +9,8 @@ import (
 	"github.com/gladiusio/gladius-p2p/pkg/p2p/message"
 	"github.com/gladiusio/gladius-p2p/pkg/p2p/signature"
 
-	"github.com/gladiusio/gladius-application-server/pkg/db/models"
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
+	"github.com/gladiusio/gladius-common/pkg/db/models"
 	"github.com/gladiusio/gladius-common/pkg/handlers"
 	"github.com/gorilla/mux"
 )

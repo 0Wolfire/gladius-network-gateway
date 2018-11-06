@@ -22,22 +22,26 @@ endif
 SRC_DIR=./cmd
 DST_DIR=./build
 
-CTL_SRC=$(SRC_DIR)/gladius-controld
-CTL_SRC_PROF=$(SRC_DIR)/gladius-controld-profiler
+CTL_SRC=$(SRC_DIR)/
+CTL_SRC_PROF=$(SRC_DIR)/gladius-network-gateway-profiler
 
-CTL_DEST=$(DST_DIR)/gladius-controld$(BINARY_SUFFIX)
+CTL_DEST=$(DST_DIR)/gladius-network-gateway$(BINARY_SUFFIX)
 
 # commands for go
-GOBUILD=go build
-GOTEST=go test
+GOBUILD=vgo build
+GOTEST=vgo test
 ##
 # MAKE TARGETS
 ##
 
 # general make targets
-all: controld
+all: 
+	make clean
+	make dependencies
+	make lint
+	make network-gateway
 
-profile-enabled: controld-profile
+profile-enabled: network-gateway-profile
 
 clean:
 	rm -rf ./build/*
@@ -58,6 +62,9 @@ dependencies:
 	"${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
 	"vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
 
+lint:
+	gometalinter --linter='vet:go tool vet -printfuncs=Infof,Debugf,Warningf,Errorf:PATH:LINE:MESSAGE' cmd/main.go
+
 test: $(CTL_SRC)
 	$(GOTEST) $(CTL_SRC)
 
@@ -70,8 +77,8 @@ protobuf:
 	Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:. \
 	./pkg/p2p/peer/messages/*.proto
 
-controld: test
+network-gateway: test
 	$(GOBUILD) -o $(CTL_DEST) $(CTL_SRC)
 
-controld-profile: test
+network-gateway-profile: test
 	$(GOBUILD) -o $(CTL_DEST) $(CTL_SRC_PROF)
