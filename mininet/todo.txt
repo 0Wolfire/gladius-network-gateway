@@ -1,6 +1,0 @@
-packet loss
-latency
-different topologies
-    -randomized
-nodes going down
-ease of testing / script use / command line flags

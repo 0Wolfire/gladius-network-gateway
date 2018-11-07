@@ -22,10 +22,10 @@ endif
 SRC_DIR=./cmd
 DST_DIR=./build
 
-CTL_SRC=$(SRC_DIR)/gladius-controld
-CTL_SRC_PROF=$(SRC_DIR)/gladius-controld-profiler
+CTL_SRC=$(SRC_DIR)/
+CTL_SRC_PROF=$(SRC_DIR)/gladius-network-gateway-profiler
 
-CTL_DEST=$(DST_DIR)/gladius-controld$(BINARY_SUFFIX)
+CTL_DEST=$(DST_DIR)/gladius-network-gateway$(BINARY_SUFFIX)
 
 # commands for go
 GOBUILD=go build
@@ -35,31 +35,50 @@ GOTEST=go test
 ##
 
 # general make targets
-all: controld
+all: 
+	make clean
+	make dependencies
+	make lint
+	make network-gateway
 
-profile-enabled: controld-profile
+profile-enabled: network-gateway-profile
 
 clean:
 	rm -rf ./build/*
-	go clean
+	go clean $(CTL_SRC)
 
 # dependency management
 dependencies:
 	# install go packages
-	dep ensure
+	GO111MODULE=on go mod vendor
 
 	# Deal with the ethereum cgo bindings
-	go get github.com/ethereum/go-ethereum
+	GO111MODULE=on go get github.com/ethereum/go-ethereum
+
+	# Protobuf generation
+	GO111MODULE=on go get -u github.com/gogo/protobuf/protoc-gen-gogofaster
 
 	cp -r \
 	"${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
 	"vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
 
+lint:
+	gometalinter --linter='vet:go tool vet -printfuncs=Infof,Debugf,Warningf,Errorf:PATH:LINE:MESSAGE' cmd/main.go
+
 test: $(CTL_SRC)
 	$(GOTEST) $(CTL_SRC)
 
-controld: test
+protobuf:
+	protoc -I=. -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=\
+	Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,\
+	Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,\
+	Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,\
+	Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
+	Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:. \
+	./pkg/p2p/peer/messages/*.proto
+
+network-gateway: test
 	$(GOBUILD) -o $(CTL_DEST) $(CTL_SRC)
 
-controld-profile: test
+network-gateway-profile: test
 	$(GOBUILD) -o $(CTL_DEST) $(CTL_SRC_PROF)
