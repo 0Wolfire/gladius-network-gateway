@@ -28,8 +28,8 @@ CTL_SRC_PROF=$(SRC_DIR)/gladius-network-gateway-profiler
 CTL_DEST=$(DST_DIR)/gladius-network-gateway$(BINARY_SUFFIX)
 
 # commands for go
-GOBUILD=vgo build
-GOTEST=vgo test
+GOBUILD=go build
+GOTEST=go test
 ##
 # MAKE TARGETS
 ##
@@ -45,7 +45,7 @@ profile-enabled: network-gateway-profile
 
 clean:
 	rm -rf ./build/*
-	go clean
+	go clean $(CTL_SRC)
 
 # dependency management
 dependencies:
