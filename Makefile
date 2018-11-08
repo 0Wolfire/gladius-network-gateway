@@ -28,8 +28,11 @@ CTL_SRC_PROF=$(SRC_DIR)/gladius-network-gateway-profiler
 CTL_DEST=$(DST_DIR)/gladius-network-gateway$(BINARY_SUFFIX)
 
 # commands for go
-GOBUILD=go build
-GOTEST=go test
+GOMOD=GO111MODULE=on
+GOBUILD=$(GOMOD) go build
+GOTEST=$(GOMOD) go test
+GOCLEAN=$(GOMOD) go clean
+
 ##
 # MAKE TARGETS
 ##
@@ -45,18 +48,19 @@ profile-enabled: network-gateway-profile
 
 clean:
 	rm -rf ./build/*
-	go clean $(CTL_SRC)
+	$(GOMOD) go mod tidy
+	$(GOCLEAN) $(CTL_SRC)
 
 # dependency management
 dependencies:
 	# install go packages
-	GO111MODULE=on go mod vendor
+	$(GOMOD) go mod vendor
 
 	# Deal with the ethereum cgo bindings
-	GO111MODULE=on go get github.com/ethereum/go-ethereum
+	$(GOMOD) go get github.com/ethereum/go-ethereum
 
 	# Protobuf generation
-	GO111MODULE=on go get -u github.com/gogo/protobuf/protoc-gen-gogofaster
+	$(GOMOD) go get -u github.com/gogo/protobuf/protoc-gen-gogofaster
 
 	cp -r \
 	"${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
