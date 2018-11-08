@@ -6,12 +6,15 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"github.com/gladiusio/gladius-common/pkg/utils"
 )
 
 // SetupConfig sets up viper and adds our config options
 func SetupConfig() {
-	// TODO: Use the gladius-common definition when it's in
-	base := "~/.config/gladius"
+	base, err := utils.GetGladiusBase()
+	if err != nil {
+		log.Warn().Err(err).Msg("Error retrieving base directory")
+	}
 
 	// Add config file name and searching
 	viper.SetConfigName("gladius-network-gateway")
@@ -24,7 +27,7 @@ func SetupConfig() {
 	viper.AutomaticEnv()
 
 	// Load config
-	err := viper.ReadInConfig()
+	err = viper.ReadInConfig()
 	if err != nil {
 		log.Warn().Err(err).Msg("Error reading config file, it may not exist or is corrupted. Using defaults.")
 	}
