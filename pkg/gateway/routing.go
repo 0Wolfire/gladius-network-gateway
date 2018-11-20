@@ -1,8 +1,9 @@
 package gateway
 
 import (
-	"github.com/gladiusio/gladius-common/pkg/routing"
 	"net/http"
+
+	"github.com/gladiusio/gladius-common/pkg/routing"
 
 	"github.com/rs/zerolog/log"
 
@@ -119,4 +120,6 @@ func (g *Gateway) addRoutes() {
 	// Market Sub-Routes
 	marketRouter := baseRouter.PathPrefix("/market").Subrouter().StrictSlash(true)
 	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
+
+	routing.AppendVersionEndpoints(baseRouter)
 }

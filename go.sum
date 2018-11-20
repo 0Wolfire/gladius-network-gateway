@@ -48,6 +48,10 @@ github.com/gladiusio/gladius-cli v0.0.0-20180821194358-283e3c80a6d0 h1:7e5GuML66
 github.com/gladiusio/gladius-cli v0.0.0-20180821194358-283e3c80a6d0/go.mod h1:neMK8iVASsY3DWXW0eJ/qpP/+A47ZkVm3Dd8WX40tA8=
 github.com/gladiusio/gladius-common v0.1.2 h1:JmPlZcdjN640rEZPQeLRkrILjUrZ34qFckDKSByNLAY=
 github.com/gladiusio/gladius-common v0.1.2/go.mod h1:m0CMPVZLow1RexpoD7vbmDf52Tzxz8UsTVoo2AdV5DU=
+github.com/gladiusio/gladius-common v0.1.3-0.20181120184523-e6873e1b2bab h1:PL6ipbz3pkDP+P+DPt7yJAkF9GUsoeZoCbdOQG6tdbY=
+github.com/gladiusio/gladius-common v0.1.3-0.20181120184523-e6873e1b2bab/go.mod h1:m0CMPVZLow1RexpoD7vbmDf52Tzxz8UsTVoo2AdV5DU=
+github.com/gladiusio/gladius-common v0.1.3-0.20181120211002-efe3692520da h1:5VhOjZ4LTOqdpIJ42D3j8wwum0sGYAQZmwuE8sEHcxE=
+github.com/gladiusio/gladius-common v0.1.3-0.20181120211002-efe3692520da/go.mod h1:m0CMPVZLow1RexpoD7vbmDf52Tzxz8UsTVoo2AdV5DU=
 github.com/gladiusio/gladius-controld v0.0.0-20180831225039-43db901bd39d h1:Oz2pU62uq7+qIJc+G/3FFVoNq/BtPJTi9TjehPzdDvI=
 github.com/gladiusio/gladius-controld v0.0.0-20180831225039-43db901bd39d/go.mod h1:7VVUNCjF8sJyi23r0zrvzUO5YSNVRICRxAUvONKx5k0=
 github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd h1:9STs+Bwd13QBEYms9LekBjk/LgKKHbAAlRJWmxDXdw0=
