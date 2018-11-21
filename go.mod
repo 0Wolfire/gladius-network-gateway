@@ -11,7 +11,7 @@ require (
 	github.com/circonus-labs/circonusllhist v0.1.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20181014144952-4e0d7dc8888f // indirect
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
-	github.com/ethereum/go-ethereum v1.8.17
+	github.com/ethereum/go-ethereum v1.8.18
 	github.com/fjl/memsize v0.0.0-20180929194037-2a09253e352a // indirect
 	github.com/gladiusio/gladius-common v0.1.2
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
