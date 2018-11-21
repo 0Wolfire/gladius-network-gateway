@@ -41,7 +41,7 @@ GOCLEAN=$(GOMOD) go clean
 all: 
 	make clean
 	make dependencies
-	make lint
+	# make lint
 	make network-gateway
 
 profile-enabled: network-gateway-profile
