@@ -62,9 +62,9 @@ dependencies:
 	# Protobuf generation
 	$(GOMOD) go get -u github.com/gogo/protobuf/protoc-gen-gogofaster
 
-	cp -r \
-	"${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
-	"vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
+	# cp -r \
+	# "${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
+	# "vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
 
 lint:
 	gometalinter --linter='vet:go tool vet -printfuncs=Infof,Debugf,Warningf,Errorf:PATH:LINE:MESSAGE' cmd/main.go
