@@ -40,7 +40,7 @@ GOCLEAN=$(GOMOD) go clean
 # general make targets
 all: 
 	make clean
-	make dependencies
+	# make dependencies
 	# make lint
 	make network-gateway
 
