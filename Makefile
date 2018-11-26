@@ -80,11 +80,11 @@ test: $(CTL_SRC)
 release: clean release-win release-linux release-mac
 
 release-win:
-	CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc GOOS=windows GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/windows-$(BINARY).exe $(CTL_SRC)
+	CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc GOOS=windows GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/windows/$(BINARY).exe $(CTL_SRC)
 release-linux:
-	CGO_ENABLED=1 CC=x86_64-linux-musl-gcc GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/linux-$(BINARY) $(CTL_SRC)
+	CGO_ENABLED=1 CC=x86_64-linux-musl-gcc GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/linux/$(BINARY) $(CTL_SRC)
 release-mac:
-	GOOS=darwin GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/macos-$(BINARY) $(CTL_SRC)
+	GOOS=darwin GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/macos/$(BINARY) $(CTL_SRC)
 
 protobuf:
 	protoc -I=. -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=\
