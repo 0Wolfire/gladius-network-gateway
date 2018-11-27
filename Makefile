@@ -25,7 +25,8 @@ DST_DIR=./build
 CTL_SRC=$(SRC_DIR)/
 CTL_SRC_PROF=$(SRC_DIR)/gladius-network-gateway-profiler
 
-CTL_DEST=$(DST_DIR)/gladius-network-gateway$(BINARY_SUFFIX)
+BINARY=gladius-network-gateway$(BINARY_SUFFIX)
+CTL_DEST=$(DST_DIR)/$(BINARY)
 
 # commands for go
 GOMOD=GO111MODULE=on
@@ -40,8 +41,8 @@ GOCLEAN=$(GOMOD) go clean
 # general make targets
 all: 
 	make clean
-	make dependencies
-	make lint
+	# make dependencies
+	# make lint
 	make network-gateway
 
 profile-enabled: network-gateway-profile
@@ -62,15 +63,28 @@ dependencies:
 	# Protobuf generation
 	$(GOMOD) go get -u github.com/gogo/protobuf/protoc-gen-gogofaster
 
-	cp -r \
-	"${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
-	"vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
+	# cp -r \
+	# "${GOPATH}/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1" \
+	# "vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/"
 
 lint:
 	gometalinter --linter='vet:go tool vet -printfuncs=Infof,Debugf,Warningf,Errorf:PATH:LINE:MESSAGE' cmd/main.go
 
 test: $(CTL_SRC)
 	$(GOTEST) $(CTL_SRC)
+
+# Made for macOS at the moment
+# Install gcc cross compilers for macOS
+# `brew install mingw-w64` - windows
+# `brew install FiloSottile/musl-cross/musl-cross` - linux
+release: clean release-win release-linux release-mac
+
+release-win:
+	CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc GOOS=windows GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/windows/$(BINARY).exe $(CTL_SRC)
+release-linux:
+	CGO_ENABLED=1 CC=x86_64-linux-musl-gcc GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/linux/$(BINARY) $(CTL_SRC)
+release-mac:
+	GOOS=darwin GOARCH=amd64 $(GOBUILD) -o $(DST_DIR)/release/macos/$(BINARY) $(CTL_SRC)
 
 protobuf:
 	protoc -I=. -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=\
