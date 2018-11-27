@@ -13,7 +13,7 @@ require (
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
 	github.com/ethereum/go-ethereum v1.8.18
 	github.com/fjl/memsize v0.0.0-20180929194037-2a09253e352a // indirect
-	github.com/gladiusio/gladius-common v0.1.2
+	github.com/gladiusio/gladius-common v0.1.3-0.20181127155001-abba502c231d
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
 	github.com/go-sql-driver/mysql v1.4.0 // indirect
 	github.com/gogo/protobuf v1.1.1 // indirect
