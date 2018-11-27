@@ -121,5 +121,5 @@ func (g *Gateway) addRoutes() {
 	marketRouter := baseRouter.PathPrefix("/market").Subrouter().StrictSlash(true)
 	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
 
-	routing.AppendVersionEndpoints(baseRouter)
+	routing.AppendVersionEndpoints(baseRouter, "0.8.0")
 }
