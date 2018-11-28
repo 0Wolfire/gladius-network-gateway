@@ -3,6 +3,8 @@ package gateway
 import (
 	"net/http"
 
+	"github.com/gladiusio/gladius-common/pkg/routing"
+
 	"github.com/rs/zerolog/log"
 
 	"github.com/spf13/viper"
@@ -88,27 +90,13 @@ func (g *Gateway) addRoutes() {
 	}
 
 	// Blockchain account management endpoints
-	accountRouter := baseRouter.PathPrefix("/account/{address:0[xX][0-9a-fA-F]{40}}").Subrouter().StrictSlash(true)
-	accountRouter.HandleFunc("/balance/{symbol:[a-z]{3}}", chandlers.AccountBalanceHandler)
-	accountRouter.HandleFunc("/transactions", chandlers.AccountTransactionsHandler).
-		Methods(http.MethodPost)
+	routing.AppendAccountManagementEndpoints(baseRouter)
 
 	// Local wallet management
-	walletRouter := baseRouter.PathPrefix("/keystore").Subrouter().StrictSlash(true)
-	walletRouter.HandleFunc("/account/create", chandlers.KeystoreAccountCreationHandler(g.ga)).
-		Methods(http.MethodPost)
-	walletRouter.HandleFunc("/account", chandlers.KeystoreAccountRetrievalHandler(g.ga))
-	walletRouter.HandleFunc("/account/open", chandlers.KeystoreAccountUnlockHandler(g.ga)).
-		Methods(http.MethodPost)
+	routing.AppendWalletManagementEndpoints(baseRouter, g.ga)
 
 	// Transaction status endpoints
-	statusRouter := baseRouter.PathPrefix("/status").Subrouter().StrictSlash(true)
-	statusRouter.HandleFunc("/", chandlers.StatusHandler).
-		Methods(http.MethodGet, http.MethodPut).
-		Name("status")
-	statusRouter.HandleFunc("/tx/{tx:0[xX][0-9a-fA-F]{64}}", chandlers.StatusTxHandler).
-		Methods(http.MethodGet).
-		Name("status-tx")
+	routing.AppendStatusEndpoints(baseRouter)
 
 	// Node pool application routes
 	nodeApplicationRouter := baseRouter.PathPrefix("/node").Subrouter().StrictSlash(true)
@@ -132,4 +120,6 @@ func (g *Gateway) addRoutes() {
 	// Market Sub-Routes
 	marketRouter := baseRouter.PathPrefix("/market").Subrouter().StrictSlash(true)
 	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
+
+	routing.AppendVersionEndpoints(baseRouter, "0.8.0")
 }
