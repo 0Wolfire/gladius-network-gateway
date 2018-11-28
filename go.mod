@@ -17,7 +17,7 @@ require (
 	github.com/fjl/memsize v0.0.0-20180929194037-2a09253e352a // indirect
 	github.com/gladiusio/gladius-common v0.1.3-0.20181127155001-abba502c231d
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
-	github.com/gladiusio/legion v0.0.0-20181127220045-bb8c49acbe30
+	github.com/gladiusio/legion v0.0.0-20181128204945-bbc684bd7984
 	github.com/go-sql-driver/mysql v1.4.0 // indirect
 	github.com/gogo/protobuf v1.1.1 // indirect
 	github.com/google/go-cmp v0.2.0 // indirect

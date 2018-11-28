@@ -58,6 +58,8 @@ github.com/gladiusio/gladius-utils v0.2.0 h1:TgaOegPAZSnN+MDnmciP6a2KaHKrZCWF/J7
 github.com/gladiusio/gladius-utils v0.2.0/go.mod h1:pjJoM/Sm6qM1ou8uz5CalgHdgksyW5ohfDXVL6qIYy0=
 github.com/gladiusio/legion v0.0.0-20181127220045-bb8c49acbe30 h1:jspsuKeD8AlPUYslPV/8K+08WLT+mGHJzZ+O1QVWCgQ=
 github.com/gladiusio/legion v0.0.0-20181127220045-bb8c49acbe30/go.mod h1:Y4Y8zjz5Bdqim8pL/ladllUxRixIvmLoLlX4ckuzK24=
+github.com/gladiusio/legion v0.0.0-20181128204945-bbc684bd7984 h1:zQoLeI2o5JIcE5R0JiCJBZTJVRB2A/PpquV7DkNwZEc=
+github.com/gladiusio/legion v0.0.0-20181128204945-bbc684bd7984/go.mod h1:Y4Y8zjz5Bdqim8pL/ladllUxRixIvmLoLlX4ckuzK24=
 github.com/go-sql-driver/mysql v1.4.0 h1:7LxgVwFb2hIQtMm87NdgAVfXjnt4OePseqT1tKx+opk=
 github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-stack/stack v1.8.0 h1:5SgMzNM5HxrEjV0ww2lTmX6E2Izsfxas4+YHWRs3Lsk=

@@ -21,7 +21,7 @@ type StatePlugin struct {
 
 // NewMessage is called every time a new message is received
 func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
-	fmt.Println(string(ctx.Message.Body()))
+	fmt.Println(string(ctx.Message.Type()))
 	switch ctx.Message.Type() {
 	case "state_update":
 		sm, err := parseSignedMessage(ctx.Message.Body())
@@ -59,6 +59,11 @@ func (state *StatePlugin) Startup(ctx *network.NetworkContext) {
 		time.Sleep(60 * time.Second)
 		ctx.Legion.BroadcastRandom(ctx.Legion.NewMessage("sync_request", []byte{}), 1)
 	}()
+}
+
+// PeerAdded is called when a new peer connects or is added
+func (state *StatePlugin) PeerAdded(ctx *network.PeerContext) {
+	ctx.Legion.PromotePeer(ctx.Peer.Remote())
 }
 
 func parseSignedMessage(smBytes []byte) (*signature.SignedMessage, error) {
