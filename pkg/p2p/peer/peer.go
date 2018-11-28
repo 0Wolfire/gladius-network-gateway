@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
+	mapset "github.com/deckarep/golang-set"
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/message"
-	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/peer/messages"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/signature"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/state"
 	"github.com/gladiusio/legion"
@@ -44,7 +44,7 @@ func New(ga *blockchain.GladiusAccountManager) *Peer {
 	peer := &Peer{
 		ga:        ga,
 		peerState: s,
-		net:       net,
+		net:       l,
 		running:   true,
 		mux:       sync.Mutex{},
 	}
@@ -70,7 +70,10 @@ func (p *Peer) Join(addressList []string) error {
 		}
 		addrs = append(addrs, addr)
 	}
-	p.net.AddPeer(addrs)
+	err := p.net.PromotePeer(addrs[0])
+	if err != nil {
+		return err
+	}
 	go func() {
 		time.Sleep(1 * time.Second)
 		p.net.Broadcast(p.net.NewMessage("sync_request", []byte{}), addrs...)
@@ -91,7 +94,7 @@ func (p *Peer) SignMessage(m *message.Message) (*signature.SignedMessage, error)
 
 // Stop will stop the peer
 func (p *Peer) Stop() {
-	p.net.Close()
+	p.net.Stop()
 }
 
 // SetState sets the internal state of the peer without validation
@@ -113,7 +116,7 @@ func (p *Peer) UpdateAndPushState(sm *signature.SignedMessage) error {
 		return err
 	}
 
-	toSend := &messages.StateMessage{Message: string(signedBytes)}
+	toSend := p.net.NewMessage("state_update", signedBytes)
 
 	p.net.Broadcast(toSend)
 

@@ -16,7 +16,6 @@ import (
 	"github.com/buger/jsonparser"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
-	"github.com/gladiusio/gladius-network-gateway/config"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/message"
 	"github.com/tdewolff/minify"
 	mjson "github.com/tdewolff/minify/json"
@@ -96,13 +95,13 @@ func (sm SignedMessage) IsVerified() bool {
 }
 
 func (sm SignedMessage) IsPoolManagerAndVerified() bool {
-	return sm.IsVerified() && sm.Address == config.GetString("blockchain.poolManagerAddress")
+	return sm.IsVerified() && sm.Address == viper.GetString("blockchain.poolManagerAddress")
 }
 
 func (sm SignedMessage) IsInPoolAndVerified() bool {
 	// Check if address is part of pool
 	// config override
-	if viper.GetBool("P2P.VerifyOverride") {
+	if viper.GetBool("P2P.MessageVerifyOverride") {
 		return sm.IsVerified() && true
 	}
 
@@ -111,9 +110,9 @@ func (sm SignedMessage) IsInPoolAndVerified() bool {
 	}
 	nodeAddress := sm.Address
 
-	poolUrl := viper.GetString("Blockchain.PoolUrl")
+	poolURL := viper.GetString("Blockchain.PoolUrl")
 
-	response, _ := utils.SendRequest(http.MethodGet, poolUrl+"applications/pool/contains/"+nodeAddress, nil)
+	response, _ := utils.SendRequest(http.MethodGet, poolURL+"applications/pool/contains/"+nodeAddress, nil)
 	var defaultResponse response2.DefaultResponse
 	json.Unmarshal([]byte(response), &defaultResponse)
 

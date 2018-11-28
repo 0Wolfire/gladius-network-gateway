@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/gladiusio/gladius-common/pkg/utils"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"github.com/gladiusio/gladius-common/pkg/utils"
 )
 
 // SetupConfig sets up viper and adds our config options
@@ -38,12 +38,12 @@ func SetupConfig() {
 
 func buildOptions(base string) {
 	// Log options
-	ConfigOption("Log.Level", "info")
+	ConfigOption("Log.Level", "debug")
 	ConfigOption("Log.Pretty", true)
 
 	// P2P options
 	ConfigOption("P2P.BindPort", 7946)
-	ConfigOption("P2P.BindAddress", "0.0.0.0")
+	ConfigOption("P2P.BindAddress", "localhost")
 	ConfigOption("P2P.MessageVerifyOverride", false)
 
 	// Blockchain options
@@ -56,7 +56,7 @@ func buildOptions(base string) {
 	ConfigOption("Wallet.Directory", filepath.Join(base, "wallet"))
 
 	// API options
-	ConfigOption("API.Port", 3001)
+	ConfigOption("API.Port", "3001")
 	ConfigOption("API.DebugRequests", false)
 	ConfigOption("API.RemoteConnectionsAllowed", false)
 

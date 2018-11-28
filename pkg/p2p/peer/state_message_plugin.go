@@ -3,12 +3,12 @@ package peer
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/buger/jsonparser"
 	"github.com/gladiusio/legion/network"
 
-	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/peer/messages"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/signature"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/state"
 )
@@ -20,48 +20,48 @@ type StatePlugin struct {
 }
 
 // NewMessage is called every time a new message is received
-func (state *StatePlugin) NewMessage(ctx *network.MessageContext) error {
-	switch msg := ctx.Message().(type) {
-	case *messages.StateMessage:
-		sm, err := parseSignedMessage(msg.Message)
+func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
+	fmt.Println(string(ctx.Message.Body()))
+	switch ctx.Message.Type() {
+	case "state_update":
+		sm, err := parseSignedMessage(ctx.Message.Body())
 		if err == nil {
 			go state.peerState.UpdateState(sm)
+		} else {
+			fmt.Println(err)
 		}
-	case *messages.SyncRequest:
+	case "sync_request":
 		smList := state.peerState.GetSignatureList()
 		smStringList := make([]string, 0)
 		for _, sm := range smList {
 			smString, _ := json.Marshal(sm)
 			smStringList = append(smStringList, string(smString))
 		}
-		ctx.Reply(&messages.SyncResponse{SignedMessage: smStringList})
-	case *messages.SyncResponse:
-		smStringList := msg.SignedMessage
-		for _, smString := range smStringList {
-			sm, err := parseSignedMessage(smString)
+		b, _ := json.Marshal(smStringList)
+		ctx.Reply(ctx.Legion.NewMessage("sync_response", b))
+	case "sync_response":
+		smListBytes := ctx.Message.Body()
+		jsonparser.ArrayEach(smListBytes, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
+			sm, err := parseSignedMessage(value)
 			if err != nil {
-				return errors.New("Invalid signed message sent")
+				return
 			}
 			go state.peerState.UpdateState(sm)
-		}
+		})
 	}
-
-	return nil
 }
 
-// Startup is called once the network is bootstrapped. Every 60
+// Startup is called once the network is started. Every 60
 // seconds we ask a random peer for it's state. This is an anti
 // entropy method that might not be entirely needed.
-func (state *StatePlugin) Startup(net *network.Network) {
+func (state *StatePlugin) Startup(ctx *network.NetworkContext) {
 	go func() {
 		time.Sleep(60 * time.Second)
-		net.BroadcastRandomly(&messages.SyncRequest{}, 1)
+		ctx.Legion.BroadcastRandom(ctx.Legion.NewMessage("sync_request", []byte{}), 1)
 	}()
 }
 
-func parseSignedMessage(sm string) (*signature.SignedMessage, error) {
-	smBytes := []byte(sm)
-
+func parseSignedMessage(smBytes []byte) (*signature.SignedMessage, error) {
 	messageBytes, _, _, err := jsonparser.Get(smBytes, "message")
 	if err != nil {
 		return nil, errors.New("Can't find `message` in body")

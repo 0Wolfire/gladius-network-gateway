@@ -18,7 +18,7 @@ func main() {
 	// Setup logging
 	setupLogger()
 
-	g := gateway.New("3001")
+	g := gateway.New(viper.GetString("API.Port"))
 	g.Start()
 
 	select {}
