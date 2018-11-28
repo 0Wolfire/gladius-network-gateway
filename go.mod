@@ -6,7 +6,7 @@ require (
 	github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 // indirect
 	github.com/aristanetworks/goarista v0.0.0-20181101003910-5bb443fba8e0 // indirect
 	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 // indirect
-	github.com/buger/jsonparser v0.0.0-20181023193515-52c6e1462ebd // indirect
+	github.com/buger/jsonparser v0.0.0-20181023193515-52c6e1462ebd
 	github.com/circonus-labs/circonus-gometrics v2.2.4+incompatible // indirect
 	github.com/circonus-labs/circonusllhist v0.1.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20181014144952-4e0d7dc8888f // indirect
@@ -15,6 +15,7 @@ require (
 	github.com/fjl/memsize v0.0.0-20180929194037-2a09253e352a // indirect
 	github.com/gladiusio/gladius-common v0.1.3-0.20181127155001-abba502c231d
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
+	github.com/gladiusio/legion v0.0.0-20181127220045-bb8c49acbe30
 	github.com/go-sql-driver/mysql v1.4.0 // indirect
 	github.com/gogo/protobuf v1.1.1 // indirect
 	github.com/google/go-cmp v0.2.0 // indirect
@@ -23,7 +24,6 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.0 // indirect
 	github.com/hashicorp/go-retryablehttp v0.0.0-20180718195005-e651d75abec6 // indirect
 	github.com/hashicorp/serf v0.8.1 // indirect
-	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
 	github.com/huin/goupnp v1.0.0 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.1 // indirect
 	github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae // indirect
@@ -47,7 +47,7 @@ require (
 	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/spf13/viper v1.2.1
 	github.com/syndtr/goleveldb v0.0.0-20181102132633-a4119e27a65d // indirect
-	github.com/tdewolff/minify v2.3.6+incompatible // indirect
+	github.com/tdewolff/minify v2.3.6+incompatible
 	github.com/tdewolff/test v1.0.0 // indirect
 	github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926 // indirect
 	github.com/zenazn/goji v0.9.0 // indirect
