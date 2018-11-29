@@ -42,8 +42,10 @@ func buildOptions(base string) {
 	ConfigOption("Log.Pretty", true)
 
 	// P2P options
-	ConfigOption("P2P.BindPort", 7946)
-	ConfigOption("P2P.BindAddress", "localhost")
+	ConfigOption("P2P.BindAddress", "0.0.0.0")
+	ConfigOption("P2P.BindPort", 7947)
+	ConfigOption("P2P.AdvertiseAddress", "")
+	ConfigOption("P2P.AdvertisePort", 7947)
 	ConfigOption("P2P.MessageVerifyOverride", false)
 
 	// Blockchain options
@@ -61,7 +63,8 @@ func buildOptions(base string) {
 	ConfigOption("API.RemoteConnectionsAllowed", false)
 
 	// Misc.
-	ConfigOption("GladiusBase", base) // Convenient option to have, not needed though
+	ConfigOption("GladiusBase", base)  // Convenient option to have, not needed though
+	ConfigOption("UPNPEnabled", false) // Use UPNP to get external IP and open ports
 
 }
 
