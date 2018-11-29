@@ -55,6 +55,8 @@ func (g *Gateway) addMiddleware() {
 }
 
 func (g *Gateway) addRoutes() {
+
+	routing.AppendVersionEndpoints(g.router, "0.8.0")
 	// Create a base router with "/api"
 	baseRouter := g.router.PathPrefix("/api").Subrouter().StrictSlash(true)
 	baseRouter.NotFoundHandler = http.HandlerFunc(chandlers.NotFoundHandler)
@@ -121,5 +123,4 @@ func (g *Gateway) addRoutes() {
 	marketRouter := baseRouter.PathPrefix("/market").Subrouter().StrictSlash(true)
 	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
 
-	routing.AppendVersionEndpoints(baseRouter, "0.8.0")
 }
