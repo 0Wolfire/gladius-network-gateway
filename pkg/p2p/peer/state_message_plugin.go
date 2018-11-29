@@ -56,8 +56,10 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 // entropy method that might not be entirely needed.
 func (state *StatePlugin) Startup(ctx *network.NetworkContext) {
 	go func() {
-		time.Sleep(60 * time.Second)
-		ctx.Legion.BroadcastRandom(ctx.Legion.NewMessage("sync_request", []byte{}), 1)
+		for {
+			time.Sleep(60 * time.Second)
+			ctx.Legion.BroadcastRandom(ctx.Legion.NewMessage("sync_request", []byte{}), 1)
+		}
 	}()
 }
 

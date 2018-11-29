@@ -33,7 +33,9 @@ func New(ga *blockchain.GladiusAccountManager) *Peer {
 	conf := legion.DefaultConfig(viper.GetString("P2P.BindAddress"), uint16(viper.GetInt("P2P.BindPort")))
 	l := legion.New(conf)
 
-	l.RegisterPlugin(new(simpledisc.Plugin))
+	disc := new(simpledisc.Plugin)
+
+	l.RegisterPlugin(disc)
 	// Create our state plugin
 	statePlugin := new(StatePlugin)
 	statePlugin.peerState = s
@@ -43,6 +45,7 @@ func New(ga *blockchain.GladiusAccountManager) *Peer {
 
 	peer := &Peer{
 		ga:        ga,
+		discovery: disc,
 		peerState: s,
 		net:       l,
 		running:   true,
@@ -57,6 +60,7 @@ type Peer struct {
 	peerState *state.State
 	net       *network.Legion
 	running   bool
+	discovery *simpledisc.Plugin
 	mux       sync.Mutex
 }
 
@@ -74,6 +78,7 @@ func (p *Peer) Join(addressList []string) error {
 	if err != nil {
 		return err
 	}
+	p.discovery.Bootstrap()
 	go func() {
 		time.Sleep(1 * time.Second)
 		p.net.Broadcast(p.net.NewMessage("sync_request", []byte{}), addrs...)
