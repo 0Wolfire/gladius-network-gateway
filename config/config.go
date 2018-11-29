@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/gladiusio/gladius-common/pkg/utils"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"github.com/gladiusio/gladius-common/pkg/utils"
 )
 
 // SetupConfig sets up viper and adds our config options
