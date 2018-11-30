@@ -12,7 +12,7 @@ import (
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
 	chandlers "github.com/gladiusio/gladius-common/pkg/handlers"
 	lhandlers "github.com/gladiusio/gladius-network-gateway/pkg/gateway/handlers"
-	"github.com/gladiusio/gladius-p2p/pkg/p2p/peer"
+	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/peer"
 	"github.com/gorilla/mux"
 )
 
@@ -64,30 +64,30 @@ func (g *Gateway) addRoutes() {
 	peerStruct := peer.New(g.ga)
 	p2pRouter := baseRouter.PathPrefix("/p2p").Subrouter().StrictSlash(true)
 	// P2P Message Routes
-	p2pRouter.HandleFunc("/message/sign", chandlers.CreateSignedMessageHandler(g.ga)).
+	p2pRouter.HandleFunc("/message/sign", lhandlers.CreateSignedMessageHandler(g.ga)).
 		Methods(http.MethodPost)
-	p2pRouter.HandleFunc("/message/verify", chandlers.VerifySignedMessageHandler).
+	p2pRouter.HandleFunc("/message/verify", lhandlers.VerifySignedMessageHandler).
 		Methods("POST")
-	p2pRouter.HandleFunc("/network/join", chandlers.JoinHandler(peerStruct)).
+	p2pRouter.HandleFunc("/network/join", lhandlers.JoinHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/network/leave", chandlers.LeaveHandler(peerStruct)).
+	p2pRouter.HandleFunc("/network/leave", lhandlers.LeaveHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/state/push_message", chandlers.PushStateMessageHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/push_message", lhandlers.PushStateMessageHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/state", chandlers.GetFullStateHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state", lhandlers.GetFullStateHandler(peerStruct)).
 		Methods("GET")
-	p2pRouter.HandleFunc("/state/node/{node_address}", chandlers.GetNodeStateHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/node/{node_address}", lhandlers.GetNodeStateHandler(peerStruct)).
 		Methods("GET")
-	p2pRouter.HandleFunc("/state/signatures", chandlers.GetSignatureListHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/signatures", lhandlers.GetSignatureListHandler(peerStruct)).
 		Methods("GET")
-	p2pRouter.HandleFunc("/state/content_diff", chandlers.GetContentNeededHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/content_diff", lhandlers.GetContentNeededHandler(peerStruct)).
 		Methods("POST")
-	p2pRouter.HandleFunc("/state/content_links", chandlers.GetContentLinksHandler(peerStruct)).
+	p2pRouter.HandleFunc("/state/content_links", lhandlers.GetContentLinksHandler(peerStruct)).
 		Methods("POST")
 
 	// Only enable for testing
 	if viper.GetBool("NodeManager.Config.Debug") {
-		p2pRouter.HandleFunc("/state/set_state", chandlers.SetStateDebugHandler(peerStruct)).
+		p2pRouter.HandleFunc("/state/set_state", lhandlers.SetStateDebugHandler(peerStruct)).
 			Methods("POST")
 	}
 

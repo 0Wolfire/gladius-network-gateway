@@ -38,12 +38,14 @@ func SetupConfig() {
 
 func buildOptions(base string) {
 	// Log options
-	ConfigOption("Log.Level", "info")
+	ConfigOption("Log.Level", "debug")
 	ConfigOption("Log.Pretty", true)
 
 	// P2P options
-	ConfigOption("P2P.BindPort", 7946)
 	ConfigOption("P2P.BindAddress", "0.0.0.0")
+	ConfigOption("P2P.BindPort", 7947)
+	ConfigOption("P2P.AdvertiseAddress", "")
+	ConfigOption("P2P.AdvertisePort", 7947)
 	ConfigOption("P2P.MessageVerifyOverride", false)
 
 	// Blockchain options
@@ -56,12 +58,13 @@ func buildOptions(base string) {
 	ConfigOption("Wallet.Directory", filepath.Join(base, "wallet"))
 
 	// API options
-	ConfigOption("API.Port", 3001)
+	ConfigOption("API.Port", "3001")
 	ConfigOption("API.DebugRequests", false)
 	ConfigOption("API.RemoteConnectionsAllowed", false)
 
 	// Misc.
-	ConfigOption("GladiusBase", base) // Convenient option to have, not needed though
+	ConfigOption("GladiusBase", base)  // Convenient option to have, not needed though
+	ConfigOption("UPNPEnabled", false) // Use UPNP to get external IP and open ports
 
 }
 

@@ -6,9 +6,11 @@ import (
 
 	"github.com/gladiusio/gladius-network-gateway/config"
 	"github.com/gladiusio/gladius-network-gateway/pkg/gateway"
+	ipify "github.com/rdegges/go-ipify"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	upnp "gitlab.com/NebulousLabs/go-upnp"
 )
 
 func main() {
@@ -18,7 +20,39 @@ func main() {
 	// Setup logging
 	setupLogger()
 
-	g := gateway.New("3001")
+	if viper.GetString("P2P.AdvertiseAddress") == "" {
+		if viper.GetBool("UPNPEnabled") {
+			log.Debug().Msg("Using UPNP to detect external IP")
+			// connect to router
+			d, err := upnp.Discover()
+			if err != nil {
+				log.Fatal().Err(err).Msg("UPNP is set to enabled, but cannot connect to service on gateway. Try enabling it on your router.")
+			}
+
+			// discover external IP
+			ip, err := d.ExternalIP()
+			if err != nil {
+				log.Fatal().Err(err).Msg("Unable to get external IP from UPNP")
+			}
+
+			config.ConfigOption("P2P.AdvertiseAddress", ip)
+
+			err = d.Forward(uint16(viper.GetInt("P2P.BindPort")), "Gladius Legion Port")
+			if err != nil {
+				log.Fatal().Int("port", viper.GetInt("P2P.BindPort")).Err(err).Msg("Error forwarding prot")
+			}
+		} else {
+			log.Debug().Msg("Using remote service to detect external IP")
+			ip, err := ipify.GetIp()
+			if err != nil {
+				log.Error().Err(err).Msg("Error getting IP address from remote service, peer to peer disabled")
+			} else {
+				config.ConfigOption("P2P.AdvertiseAddress", ip)
+			}
+		}
+	}
+
+	g := gateway.New(viper.GetString("API.Port"))
 	g.Start()
 
 	select {}

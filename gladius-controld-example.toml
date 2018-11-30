@@ -1,67 +1,38 @@
-############################################
-# Copy and rename to gladius-controld-bak.toml #
-############################################
+# Uncomment to change the gladius base directory
+# gladiusbase = "/home/USER/.gladius"
 
-# Default Gladius Control Daemon Config
-version               = "0.5.0"
-build                 = 20180821
+# Use UPNP to discover WAN IP, and open p2p port
+upnpenabled = false
 
-[logging]
-  path                = "./logs/"
+[api]
+  debugrequests = false
+  port = "3001"
+  remoteconnectionsallowed = false
 
-[directory]
-  # default wallet location
-  # unix-based, ~/.config/gladius/wallet
-  base                = "$home/.config/gladius/"
-  wallet              = "wallet"
-[P2P]
-  bindPort            = 7946
-  advertisePort       = 7946
-  BindAddress         = "0.0.0.0"
-  verifyOverride      = true # Toggle IsInPoolAndVerified override, true == bypass
-
+# Infura and smart contract configs
 [blockchain]
-  provider            = "https://ropsten.infura.io/tjqLYxxGIUp0NylVCiWw"
-  poolAddress         = "0x89686Bc2fe2F2D8a16928ec7d9b49076f01AA612"
-  marketAddress       = "0xc4dfb5c9e861eeae844795cfb8d30b77b78bbc38"
-  poolManagerAddress  = "0x1f136d7b6308870ed334378f381c9f56d04c3aba"
+  marketaddress = "0x27a9390283236f836a0b3c8dfdbed2ed854322fc"
+  poolmanageraddress = "0x9717EaDbfE344457135a4f1fA8AE3B11B4CAB0b7"
+  poolurl = "http://174.138.111.1/api/"
+  provider = "https://mainnet.infura.io/tjqLYxxGIUp0NylVCiWw"
 
-[nodeManager]
-  [nodeManager.config]
-    name              = "GladiusNodeControlDaemon"
-    displayName       = "Gladius Node Manager"
-    description       = "Gladius Control Daemon"
-    debug             = true # Toggle API Debugging
-    port              = "3001"
+# Change the logger
+[log]
+  level = "debug"
+  pretty = true
 
-[poolManager]
-  [poolManager.config]
-    name              = "GladiusPoolControlDaemon"
-    displayName       = "Gladius Pool Manager"
-    description       = "Gladius Control Daemon"
-    debug             = true # Toggle API Debugging
-    port              = "3000"
-  [poolManager.database]
-    type              = "postgres" # only supported db type
-    host              = "127.0.0.1"
-    port              = "5432"
-    user              = "some-user"
-    name              = "some-database-name"
-    password          = "some-password"
-    ssl               = false # true / false
+[p2p]
+  # Tell other nodes how to reach you. If left empty, the Network Gateway will 
+  # do detection either with UPNP (if enabled) or an external service
+  advertiseaddress = "" # What is advertised as your reachable address
+  advertiseport = 7947 # Advertised port
+  
+  # The interface and port to listen on
+  bindaddress = "0.0.0.0" # The interface 
+  bindport = 7947
 
-[applicationServer]
-  [applicationServer.config]
-    name              = "GladiusApplicationServerControlDaemon"
-    displayName       = "Gladius Application Server"
-    description       = "Gladius Control Daemon"
-    debug             = true # Toggle API Debugging
-    port              = "3333"
-  [applicationServer.database]
-    type              = "postgres" # only supported db type
-    host              = "127.0.0.1"
-    port              = "5432"
-    user              = "some-user"
-    name              = "some-database-name"
-    password          = "some-password"
-    ssl               = false # true / false
+  # Verify if messages are from the pool or not, used in testing
+  messageverifyoverride = false
+
+[wallet]
+  directory = "/home/alex/.gladius/wallet"
