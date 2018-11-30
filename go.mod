@@ -17,7 +17,7 @@ require (
 	github.com/fjl/memsize v0.0.0-20180929194037-2a09253e352a // indirect
 	github.com/gladiusio/gladius-common v0.1.4
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
-	github.com/gladiusio/legion v0.0.0-20181129180551-2919c9e9ec7b
+	github.com/gladiusio/legion v0.0.0-20181129213339-d2ef1dd5b7f2
 	github.com/go-sql-driver/mysql v1.4.0 // indirect
 	github.com/gogo/protobuf v1.1.1 // indirect
 	github.com/google/go-cmp v0.2.0 // indirect
@@ -29,6 +29,7 @@ require (
 	github.com/huin/goupnp v1.0.0 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.1 // indirect
 	github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae // indirect
+	github.com/jpillora/backoff v0.0.0-20180909062703-3050d21c67d7 // indirect
 	github.com/karalabe/hid v0.0.0-20180420081245-2b4488a37358 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lib/pq v1.0.0 // indirect
@@ -38,10 +39,12 @@ require (
 	github.com/mitchellh/mapstructure v1.1.2 // indirect
 	github.com/onsi/gomega v1.4.2 // indirect
 	github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c // indirect
+	github.com/pelletier/go-toml v1.2.0
 	github.com/prometheus/client_golang v0.9.0 // indirect
 	github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910 // indirect
 	github.com/prometheus/common v0.0.0-20181020173914-7e9e6cabbd39 // indirect
 	github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d // indirect
+	github.com/rdegges/go-ipify v0.0.0-20150526035502-2d94a6a86c40
 	github.com/rs/cors v1.6.0 // indirect
 	github.com/rs/xid v1.2.1 // indirect
 	github.com/rs/zerolog v1.10.0
@@ -53,6 +56,8 @@ require (
 	github.com/tdewolff/test v1.0.0 // indirect
 	github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926 // indirect
 	github.com/zenazn/goji v0.9.0 // indirect
+	gitlab.com/NebulousLabs/fastrand v0.0.0-20181126182046-603482d69e40 // indirect
+	gitlab.com/NebulousLabs/go-upnp v0.0.0-20181011194642-3a71999ed0d3
 	golang.org/x/crypto v0.0.0-20181030102418-4d3f4d9ffa16 // indirect
 	golang.org/x/net v0.0.0-20181102091132-c10e9556a7bc // indirect
 	golang.org/x/sys v0.0.0-20181031143558-9b800f95dbbc // indirect

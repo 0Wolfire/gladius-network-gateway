@@ -21,7 +21,6 @@ type StatePlugin struct {
 
 // NewMessage is called every time a new message is received
 func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
-	fmt.Println(string(ctx.Message.Type()))
 	switch ctx.Message.Type() {
 	case "state_update":
 		sm, err := parseSignedMessage(ctx.Message.Body())

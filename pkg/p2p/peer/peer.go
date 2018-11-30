@@ -2,6 +2,7 @@ package peer
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"strings"
@@ -16,6 +17,7 @@ import (
 	"github.com/gladiusio/legion"
 	"github.com/gladiusio/legion/network"
 	"github.com/gladiusio/legion/utils"
+	"github.com/rs/zerolog/log"
 
 	"github.com/gladiusio/legion/plugins/simpledisc"
 	"github.com/spf13/viper"
@@ -31,6 +33,8 @@ func New(ga *blockchain.GladiusAccountManager) *Peer {
 	s.RegisterPoolListFields("required_content")
 
 	conf := legion.DefaultConfig(viper.GetString("P2P.BindAddress"), uint16(viper.GetInt("P2P.BindPort")))
+	// Set up the advertise address
+	conf.AdvertiseAddress = utils.NewLegionAddress(viper.GetString("P2P.AdvertiseAddress"), uint16(viper.GetInt("P2P.AdvertisePort")))
 	l := legion.New(conf)
 
 	disc := new(simpledisc.Plugin)
@@ -41,7 +45,12 @@ func New(ga *blockchain.GladiusAccountManager) *Peer {
 	statePlugin.peerState = s
 	l.RegisterPlugin(statePlugin)
 
-	go l.Listen()
+	go func() {
+		err := l.Listen()
+		if err != nil {
+			log.Error().Err(err).Msg("Error listenting")
+		}
+	}()
 
 	peer := &Peer{
 		ga:        ga,
@@ -66,6 +75,12 @@ type Peer struct {
 
 // Join will request to join the network from a specific node
 func (p *Peer) Join(addressList []string) error {
+	if viper.GetString("P2P.BindAddress") == "" {
+		return errors.New("can't join network, bind address is not correctly detected or set")
+	}
+	if viper.GetString("P2P.AdvertiseAddress") == "" {
+		return errors.New("can't join network, advertise address is not correctly detected or set")
+	}
 	addrs := make([]utils.LegionAddress, 0)
 	for _, addrString := range addressList {
 		addr := utils.LegionAddressFromString(addrString)

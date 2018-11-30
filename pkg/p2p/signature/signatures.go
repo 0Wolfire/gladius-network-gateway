@@ -95,7 +95,7 @@ func (sm SignedMessage) IsVerified() bool {
 }
 
 func (sm SignedMessage) IsPoolManagerAndVerified() bool {
-	return sm.IsVerified() && sm.Address == viper.GetString("blockchain.poolManagerAddress")
+	return sm.IsVerified() && sm.Address == viper.GetString("blockchain.PoolManagerAddress")
 }
 
 func (sm SignedMessage) IsInPoolAndVerified() bool {
