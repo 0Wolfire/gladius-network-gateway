@@ -56,7 +56,7 @@ func (g *Gateway) addMiddleware() {
 
 func (g *Gateway) addRoutes() {
 
-	routing.AppendVersionEndpoints(g.router, "0.7.0")
+	routing.AppendVersionEndpoints(g.router, "0.7.1")
 	// Create a base router with "/api"
 	baseRouter := g.router.PathPrefix("/api").Subrouter().StrictSlash(true)
 	baseRouter.NotFoundHandler = http.HandlerFunc(chandlers.NotFoundHandler)
