@@ -51,10 +51,6 @@ github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd h1:9STs+Bwd1
 github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd/go.mod h1:7JZYgn4qHW/GdTn4YcldQ9Q/vpqGfAGaa08y4xFstqI=
 github.com/gladiusio/gladius-utils v0.2.0 h1:TgaOegPAZSnN+MDnmciP6a2KaHKrZCWF/J7NkY5K4ZE=
 github.com/gladiusio/gladius-utils v0.2.0/go.mod h1:pjJoM/Sm6qM1ou8uz5CalgHdgksyW5ohfDXVL6qIYy0=
-github.com/gladiusio/legion v0.0.0-20181129213339-d2ef1dd5b7f2 h1:gw4eHy6zKEJ23j3PfNv70T1g/kInBHNPBuYYr/BoC/0=
-github.com/gladiusio/legion v0.0.0-20181129213339-d2ef1dd5b7f2/go.mod h1:Y4Y8zjz5Bdqim8pL/ladllUxRixIvmLoLlX4ckuzK24=
-github.com/gladiusio/legion v0.0.0-20181217204828-81ee44124459 h1:WdK2OicCfRr39U0GhkJNmmEaZ1GqRzyEl4K4b3gnQjw=
-github.com/gladiusio/legion v0.0.0-20181217204828-81ee44124459/go.mod h1:Y4Y8zjz5Bdqim8pL/ladllUxRixIvmLoLlX4ckuzK24=
 github.com/gladiusio/legion v0.0.1 h1:dh2Mo8TbOiN9nfTkeqhKaTwvh37y4LyEIBbiUGOEGv0=
 github.com/gladiusio/legion v0.0.1/go.mod h1:Y4Y8zjz5Bdqim8pL/ladllUxRixIvmLoLlX4ckuzK24=
 github.com/go-sql-driver/mysql v1.4.0 h1:7LxgVwFb2hIQtMm87NdgAVfXjnt4OePseqT1tKx+opk=
@@ -67,7 +63,7 @@ github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db h1:woRePGFeVFfLKN/pOkfl+p/TAqKOfFu+7KPlMVpok/w=
 github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
-github.com/google/flatbuffers v1.10.0 h1:oRiOciRvbejW4wxTr/DVVAczyQaxsEONq6NyxhDf3bY=
+github.com/google/flatbuffers v1.10.0 h1:wHCM5N1xsJ3VwePcIpVqnmjAqRXlR44gv4hpGi+/LIw=
 github.com/google/flatbuffers v1.10.0/go.mod h1:1AeVuKshWv4vARoZatz6mlQ0JxURH0Kv5+zNeJKJCa8=
 github.com/google/go-cmp v0.2.0 h1:+dTQ8DZQJz0Mb/HjFlkptS1FeQ4cWSnN941F8aEG4SQ=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
