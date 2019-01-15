@@ -22,7 +22,10 @@ vendor/
 build/
 
 # config
-gladius-controld.toml
+gladius-network-gateway.toml
+
+# docker example mapped folder
+gladius/
 
 ################
 # IntelliJ IDE #

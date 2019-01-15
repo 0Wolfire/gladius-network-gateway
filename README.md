@@ -1,6 +1,21 @@
-# Gladius Control Daemon
+# Gladius Network Gateway
 
 See the main [gladius-node](https://github.com/gladiusio/gladius-node) repository to see more.
+
+## Docker
+
+### Docker Hub
+
+`docker run -it -v GLADIUS_PATH:/root/.gladius -p 7947:7947 -p 3001:3001 gladius-network-gateway:latest`
+
+### Build from GitHub
+
+`docker build --tag=gladius-network-gateway .`
+
+`docker run -it -v $(pwd)/gladius:/root/.gladius -p 7947:7947 -p 3001:3001 gladius-network-gateway:latest`
+
+* Runs the container mapping the local gladius folder in this directory to the Docker container
+* Sets both used ports to the relevant machine ports
 
 ## Cross compile
 
