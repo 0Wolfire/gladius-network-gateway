@@ -15,10 +15,14 @@ import (
 
 func main() {
 	// Setup config
-	config.SetupConfig()
+	message, err := config.SetupConfig()
 
 	// Setup logging
 	setupLogger()
+
+	if err != nil {
+		log.Warn().Msg(message)
+	}
 
 	if viper.GetString("P2P.AdvertiseAddress") == "" {
 		if viper.GetBool("UPNPEnabled") {
@@ -79,7 +83,7 @@ func setupLogger() {
 		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}
 
-	if viper.GetBool("Log.Pretty") {
+	if !viper.IsSet("Log.Pretty") || (viper.IsSet("Log.Pretty") && viper.GetBool("Log.Pretty")) {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	}
 }
