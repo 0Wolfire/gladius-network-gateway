@@ -1,3 +1,4 @@
+# Move to gladius-network-gateway.toml
 # Uncomment to change the gladius base directory
 # gladiusbase = "/home/USER/.gladius"
 
@@ -35,4 +36,4 @@ upnpenabled = false
   messageverifyoverride = false
 
 [wallet]
-  directory = "/home/alex/.gladius/wallet"
+  directory = "/home/user/.gladius/wallet"
