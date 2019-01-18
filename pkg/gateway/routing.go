@@ -33,7 +33,7 @@ type Gateway struct {
 func (g *Gateway) Start() {
 	g.addMiddleware()
 	g.addRoutes()
-	g.unlockWallet()
+	g.initializeConfigWallet()
 
 	// Slighlty confusing but will make /test/ redirect to /test (note the no
 	// trailing slash)
@@ -125,7 +125,7 @@ func (g *Gateway) addRoutes() {
 	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
 }
 
-func (g *Gateway) unlockWallet() {
+func (g *Gateway) initializeConfigWallet() {
 	passphrase := viper.GetString("Wallet.Passphrase")
 	if passphrase != "" {
 		if  !g.ga.HasAccount() {
