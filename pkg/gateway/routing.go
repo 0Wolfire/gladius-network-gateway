@@ -33,6 +33,7 @@ type Gateway struct {
 func (g *Gateway) Start() {
 	g.addMiddleware()
 	g.addRoutes()
+	g.unlockWallet()
 
 	// Slighlty confusing but will make /test/ redirect to /test (note the no
 	// trailing slash)
@@ -122,5 +123,28 @@ func (g *Gateway) addRoutes() {
 	// Market Sub-Routes
 	marketRouter := baseRouter.PathPrefix("/market").Subrouter().StrictSlash(true)
 	marketRouter.HandleFunc("/pools", chandlers.MarketPoolsHandler(g.ga))
+}
 
+func (g *Gateway) unlockWallet() {
+	passphrase := viper.GetString("Wallet.Passphrase")
+	if passphrase != "" {
+		if  !g.ga.HasAccount() {
+			_, err := g.ga.CreateAccount(passphrase)
+			if err != nil {
+				log.Error().Err(err).Msg("Wallet could not be created with configured passphrase")
+			} else {
+				log.Debug().Msg("Wallet Created with config file passphrase")
+			}
+		}
+
+		unlocked, err := g.ga.UnlockAccount(passphrase)
+		if err != nil {
+			log.Error().Err(err).Msg("Wallet could not be unlocked with configured passphrase")
+		}
+		if unlocked {
+			log.Debug().Msg("Wallet has been unlocked via config file")
+		} else {
+			log.Debug().Msg("Wallet could not be automatically unlocked")
+		}
+	}
 }
