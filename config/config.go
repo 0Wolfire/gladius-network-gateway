@@ -58,6 +58,7 @@ func buildOptions(base string) {
 
 	// Wallet options
 	ConfigOption("Wallet.Directory", filepath.Join(base, "wallet"))
+	ConfigOption("Wallet.Passphrase", "")  // Only should be used for automated deployment
 
 	// API options
 	ConfigOption("API.Port", "3001")
