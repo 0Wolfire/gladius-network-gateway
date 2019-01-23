@@ -65,9 +65,9 @@ func buildOptions(base string) {
 	ConfigOption("API.RemoteConnectionsAllowed", false)
 
 	// Misc.
-	ConfigOption("GladiusBase", base)  // Convenient option to have, not needed though
-	ConfigOption("UPNPEnabled", false) // Use UPNP to get external IP and open ports
-
+	ConfigOption("GladiusBase", base)   // Convenient option to have, not needed though
+	ConfigOption("UPNPEnabled", false)  // Use UPNP to get external IP and open ports
+	ConfigOption("HTTPProfiler", false) // Enable the profiler on an HTTP endpoint
 }
 
 func ConfigOption(key string, defaultValue interface{}) string {

@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"net/http"
+	"net/http/pprof"
 
 	"github.com/gladiusio/gladius-common/pkg/routing"
 
@@ -45,6 +46,13 @@ func (g *Gateway) Start() {
 			log.Fatal().Err(err).Msg("Error starting API")
 		}
 	}()
+
+	if viper.GetBool("HTTPProfiler") {
+		r := mux.NewRouter()
+		log.Warn().Msg("HTTP Profiler running on port 3002")
+		r.PathPrefix("/debug/pprof/").HandlerFunc(pprof.Index)
+		go http.ListenAndServe(":3002", r)
+	}
 
 	log.Info().Msg("Started API at http://localhost:" + g.port)
 }
