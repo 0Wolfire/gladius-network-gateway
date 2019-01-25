@@ -25,7 +25,6 @@ func PoolResponseForAddress(poolAddress string, ga *blockchain.GladiusAccountMan
 	return poolResponse, nil
 }
 
-// New Routes
 func NodeNewApplicationHandler(ga *blockchain.GladiusAccountManager) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := handlers.AccountErrorHandler(w, r, ga)

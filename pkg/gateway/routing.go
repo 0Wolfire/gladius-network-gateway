@@ -13,6 +13,7 @@ import (
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
 	chandlers "github.com/gladiusio/gladius-common/pkg/handlers"
 	lhandlers "github.com/gladiusio/gladius-network-gateway/pkg/gateway/handlers"
+	"github.com/gladiusio/gladius-network-gateway/pkg/gateway/controllers"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/peer"
 	"github.com/gorilla/mux"
 )
@@ -54,6 +55,8 @@ func (g *Gateway) Start() {
 		r.PathPrefix("/debug/pprof/").HandlerFunc(pprof.Index)
 		go http.ListenAndServe(":3002", r)
 	}
+
+	g.autojoinPool()
 
 	log.Info().Msg("Started API at http://localhost:" + g.port)
 }
@@ -155,4 +158,23 @@ func (g *Gateway) initializeConfigWallet() {
 			log.Debug().Msg("Wallet could not be automatically unlocked")
 		}
 	}
+}
+
+func (g *Gateway) autojoinPool() {
+	if !viper.GetBool("Pool.AutoJoin") {
+		return
+	}
+
+	if viper.GetString("Pool.Address") == "" {
+		log.Error().Msg("Pool autojoin enabled, but pool address is blank")
+		return
+	}
+
+	if !g.ga.Unlocked() {
+		log.Error().Msg("Node wallet locked, could not automatically join pool.")
+		return
+	}
+
+	poolAddress := viper.GetString("Pool.Address")
+	controllers.ApplyToPool(poolAddress, g.ga)
 }
