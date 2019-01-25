@@ -37,3 +37,16 @@ upnpenabled = false
 
 [wallet]
   directory = "/home/user/.gladius/wallet"
+  Passphrase = ""
+
+[Pool]
+  AutoJoin = false
+  URL = "http://localhost:3002/api/"
+  Address = "0x0000000000000000000000000000000000000000"
+
+[Profile]
+  Name = "Example Node"
+  Email = "example@gladius.io"
+  Bio = "Example Bio"
+  Location = ""
+  EstimatedSpeed = 100
