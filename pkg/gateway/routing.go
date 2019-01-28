@@ -165,8 +165,8 @@ func (g *Gateway) autojoinPool() {
 		return
 	}
 
-	if viper.GetString("Pool.Address") == "" {
-		log.Error().Msg("Pool autojoin enabled, but pool address is blank")
+	if viper.GetString("Pool.Address") + viper.GetString("Pool.URL") == "" {
+		log.Error().Msg("Pool autojoin enabled, but pool address & url is blank")
 		return
 	}
 

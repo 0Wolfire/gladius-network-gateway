@@ -57,4 +57,6 @@ func ApplyToPool(poolAddress string, ga *blockchain.GladiusAccountManager) {
 		log.Error().Err(err).Msg("Could not complete application")
 		return
 	}
+
+	log.Debug().Msg("Wallet: " + accountAddress.String() + " automatically applied to " + poolURL)
 }
