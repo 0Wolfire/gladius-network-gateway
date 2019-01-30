@@ -3,33 +3,39 @@
 See the main [gladius-node](https://github.com/gladiusio/gladius-node) repository to see more.
 
 ## Docker
+Running the Network Gateway in a docker container
 
-### Docker Hub
+#### From Docker Hub
 
-`docker run -it -v GLADIUS_PATH:/root/.gladius -p 7947:7947 -p 3001:3001 gladius-network-gateway:latest`
+```bash
+$ docker run -it -v YOUR_GLADIUS_PATH:/root/.gladius -p 7947:7947 \
+    -p 3001:3001 ladiusio/network-gateway:latest
+```
 
-### Build from GitHub
+#### Build from GitHub
 
-`docker build --tag=gladius-network-gateway .`
+```bash
+$ docker build --tag=gladiusio/network-gateway .
 
-`docker run -it -v $(pwd)/gladius:/root/.gladius -p 7947:7947 -p 3001:3001 gladius-network-gateway:latest`
-
-* Runs the container mapping the local gladius folder in this directory to the Docker container
+$ docker run -it -v $(pwd)/gladius:/root/.gladius -p 7947:7947 -p 3001:3001 \
+    gladiusio/network-gateway:latest
+```
+* Runs the container mapping the local `./gladius` folder in this directory to the Docker containe
 * Sets both used ports to the relevant machine ports
 
-## Cross compile
+## Build from source
 
-To compile for other systems you need to install [xgo](https://github.com/karalabe/xgo).
-This is because of the Ethereum CGO bindings.
+#### For your machine
+Run `make`. The binary will be in `./build`
 
-Run `make dependencies`
+#### Cross compile
+Check out the [gladius-node](https://github.com/gladiusio/gladius-node) repository for Dockerized cross compilation.
 
-Then run `xgo --targets="windows/*,darwin/*,linux/*" --dest="./build/" ./cmd/gladius-controld`
-from the project root. You can change the target to be whatever system you want.
+#### Run linter
 
 Optionally, you can install and run linting tools:
 
-```sh
+```shell
 go get gopkg.in/alecthomas/gometalinter.v2
 gometalinter.v2 --install
 make lint
@@ -46,7 +52,5 @@ Throughout the document, you will see {{ETH_ADDRESS}}. This is a placeholder for
 ## Known issues
 
 -   You will need to install glibc on systems that don't have it by default (like
-    alpine linux) to be able to run. This is due to the C bindings that Ethereum 
-    has.
-
-## References
+    alpine linux) to be able to run if the binary is dynamically linked. This is due to the C bindings that Ethereum 
+    has. One way to fix this is to statically compile the Go binary with `-ldflags '-w -extldflags "-static"`
