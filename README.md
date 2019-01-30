@@ -26,6 +26,8 @@ $ docker run -it -v $(pwd)/gladius:/root/.gladius -p 7947:7947 -p 3001:3001 \
 ## Build from source
 
 #### For your machine
+You will need [Go](https://golang.org/dl/) 1.11.4 or higher (some issues with go mod checksums below that)
+
 Run `make`. The binary will be in `./build`
 
 #### Cross compile
@@ -35,7 +37,7 @@ Check out the [gladius-node](https://github.com/gladiusio/gladius-node) reposito
 
 Optionally, you can install and run linting tools:
 
-```shell
+```bash
 go get gopkg.in/alecthomas/gometalinter.v2
 gometalinter.v2 --install
 make lint
@@ -46,6 +48,4 @@ Slate docs coming soon
 
 ## Known issues
 
--   You will need to install glibc on systems that don't have it by default (like
-    alpine linux) to be able to run if the binary is dynamically linked. This is due to the C bindings that Ethereum 
-    has. One way to fix this is to statically compile the Go binary with `-ldflags '-w -extldflags "-static"`
+-   You will need to install glibc on systems that don't have it by default (like alpine linux) to be able to run if the binary is dynamically linked. This is due to the C bindings that Ethereum has. One way to fix this is to statically compile the Go binary with `-ldflags '-w -extldflags "-static"`
