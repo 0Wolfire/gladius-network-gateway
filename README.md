@@ -42,12 +42,7 @@ make lint
 ```
 
 ## API Documentation
-
-See the [API Documentation](./apidocs/APIDOCS.MD)
-
-This document provides documentation for the Gladius Control Daemon to build interfaces on top of the Gladius Network with familiar REST API calls. If something needs more detail or explanation, please file an issue.
-
-Throughout the document, you will see {{ETH_ADDRESS}}. This is a placeholder for either a node address or pool address in almost all cases.
+Slate docs coming soon
 
 ## Known issues
 
