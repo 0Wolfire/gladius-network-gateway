@@ -9,7 +9,7 @@ Running the Network Gateway in a docker container
 
 ```bash
 $ docker run -it -v YOUR_GLADIUS_PATH:/root/.gladius -p 7947:7947 \
-    -p 3001:3001 ladiusio/network-gateway:latest
+    -p 3001:3001 gladiusio/network-gateway:latest
 ```
 
 #### Build from GitHub
@@ -20,7 +20,7 @@ $ docker build --tag=gladiusio/network-gateway .
 $ docker run -it -v $(pwd)/gladius:/root/.gladius -p 7947:7947 -p 3001:3001 \
     gladiusio/network-gateway:latest
 ```
-* Runs the container mapping the local `./gladius` folder in this directory to the Docker containe
+* Runs the container mapping the local `./gladius` folder in this directory to the Docker container
 * Sets both used ports to the relevant machine ports
 
 ## Build from source
