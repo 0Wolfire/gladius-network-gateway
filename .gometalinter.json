@@ -23,9 +23,9 @@
         "vet",
         "vetshadow"
     ],
-    "Vendor": true,
+    "Vendor": false,
     "Sort": ["severity"],
-    "Test": true,
+    "Test": false,
     "Aggregate": true,
     "Deadline": "60s",
     "Linters": {

@@ -9,11 +9,9 @@ require (
 	github.com/gladiusio/gladius-common v0.1.10
 	github.com/gladiusio/gladius-p2p v0.0.0-20181008220948-6743a31a69fd
 	github.com/gladiusio/legion v0.0.3
-	github.com/gogo/protobuf v1.1.1 // indirect
 	github.com/gorilla/mux v1.6.2
 	github.com/jpillora/backoff v0.0.0-20180909062703-3050d21c67d7 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
-	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/miekg/dns v1.0.14 // indirect
 	github.com/rdegges/go-ipify v0.0.0-20150526035502-2d94a6a86c40
 	github.com/rs/cors v1.6.0 // indirect
