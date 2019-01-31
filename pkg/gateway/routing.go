@@ -12,8 +12,8 @@ import (
 
 	"github.com/gladiusio/gladius-common/pkg/blockchain"
 	chandlers "github.com/gladiusio/gladius-common/pkg/handlers"
-	lhandlers "github.com/gladiusio/gladius-network-gateway/pkg/gateway/handlers"
 	"github.com/gladiusio/gladius-network-gateway/pkg/gateway/controllers"
+	lhandlers "github.com/gladiusio/gladius-network-gateway/pkg/gateway/handlers"
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/peer"
 	"github.com/gorilla/mux"
 )
@@ -68,7 +68,7 @@ func (g *Gateway) addMiddleware() {
 
 func (g *Gateway) addRoutes() {
 
-	routing.AppendVersionEndpoints(g.router, "0.7.2")
+	routing.AppendVersionEndpoints(g.router, "0.8.0")
 	// Create a base router with "/api"
 	baseRouter := g.router.PathPrefix("/api").Subrouter().StrictSlash(true)
 	baseRouter.NotFoundHandler = http.HandlerFunc(chandlers.NotFoundHandler)
@@ -139,7 +139,7 @@ func (g *Gateway) addRoutes() {
 func (g *Gateway) initializeConfigWallet() {
 	passphrase := viper.GetString("Wallet.Passphrase")
 	if passphrase != "" {
-		if  !g.ga.HasAccount() {
+		if !g.ga.HasAccount() {
 			_, err := g.ga.CreateAccount(passphrase)
 			if err != nil {
 				log.Error().Err(err).Msg("Wallet could not be created with configured passphrase")
@@ -165,7 +165,7 @@ func (g *Gateway) autojoinPool() {
 		return
 	}
 
-	if viper.GetString("Pool.Address") + viper.GetString("Pool.URL") == "" {
+	if viper.GetString("Pool.Address")+viper.GetString("Pool.URL") == "" {
 		log.Error().Msg("Pool autojoin enabled, but pool address & url is blank")
 		return
 	}
