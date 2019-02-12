@@ -27,7 +27,7 @@ import (
 func New(ga *blockchain.GladiusAccountManager) *Peer {
 	// Setup our state and register accepted fields
 	s := state.New()
-	s.RegisterNodeSingleFields("ip_address", "content_port", "heartbeat")
+	s.RegisterNodeSingleFields("ip_address", "content_port", "heartbeat", "http_port")
 	s.RegisterNodeListFields("disk_content")
 
 	s.RegisterPoolListFields("required_content")
@@ -212,11 +212,11 @@ func (p *Peer) GetContentLinks(contentList []string) map[string][]string {
 // Builds a URL to a node
 func (p *Peer) createContentLink(nodeAddress, contentFileName string) string {
 	nodeIP := p.GetState().GetNodeField(nodeAddress, "ip_address").(*state.SignedField).Data
-	nodePort := p.GetState().GetNodeField(nodeAddress, "content_port").(*state.SignedField).Data
+	nodePort := p.GetState().GetNodeField(nodeAddress, "http_port").(*state.SignedField).Data
 
 	contentData := strings.Split(contentFileName, "/")
 	u := url.URL{}
-	if nodeIP == nil || nodePort == nil {
+	if nodeIP == nil || nodePort == nil || nodeIP == "" || nodePort == "" {
 		return ""
 	}
 	u.Host = nodeIP.(string) + ":" + nodePort.(string)

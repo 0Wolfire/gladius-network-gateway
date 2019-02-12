@@ -245,7 +245,7 @@ func (s *State) nodeHandler(nodeUpdate []byte, timestamp int64, sm *signature.Si
 		// If it's a different protocol, or not an understood field, don't add it to
 		// our state
 		if s.isUnderstoodNodeField(keyString) {
-			// Check if the our node has never been updated, or the incomming message
+			// Check if the our node has never been updated, or the incoming message
 			// is newer than the one we have
 			if s.fieldType(keyString) == 0 {
 				if s.NodeDataMap[sm.Address][keyString] == nil ||
