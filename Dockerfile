@@ -5,6 +5,7 @@ RUN cd /src && go build -tags netgo -a -v -o gladius-network-gateway -ldflags '-
 
 # final stage
 FROM alpine
+RUN apk --no-cache --update upgrade && apk --no-cache add ca-certificates
 WORKDIR /app
 VOLUME /root/.gladius
 COPY --from=build-env /src/gladius-network-gateway /app/
