@@ -50,7 +50,10 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 				log.Debug().Str("signed_message", string(value)).Msg("Error parsing sync_response")
 				return
 			}
-			go state.peerState.UpdateState(sm)
+			go func() {
+				err := state.peerState.UpdateState(sm)
+				log.Error().Err(err).Msg("Error updating state from sync_response")
+			}()
 		})
 	}
 }
