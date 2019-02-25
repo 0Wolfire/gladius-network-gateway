@@ -34,12 +34,10 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 	case "sync_request":
 		log.Debug().Msg("Got sync request")
 		smList := state.peerState.GetSignatureList()
-		smStringList := make([]string, 0)
-		for _, sm := range smList {
-			smString, _ := json.Marshal(sm)
-			smStringList = append(smStringList, string(smString))
+		b, err := json.Marshal(smList)
+		if err != nil {
+			return
 		}
-		b, _ := json.Marshal(smStringList)
 		ctx.Reply(ctx.Legion.NewMessage("sync_response", b))
 	case "sync_response":
 		smListBytes := ctx.Message.Body()
