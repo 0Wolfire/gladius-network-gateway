@@ -42,11 +42,12 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 		b, _ := json.Marshal(smStringList)
 		ctx.Reply(ctx.Legion.NewMessage("sync_response", b))
 	case "sync_response":
-		log.Debug().Msg("Got sync response")
 		smListBytes := ctx.Message.Body()
+		log.Debug().Str("signed_message", string(smListBytes)).Msg("Got sync response")
 		jsonparser.ArrayEach(smListBytes, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 			sm, err := parseSignedMessage(value)
 			if err != nil {
+				log.Debug().Str("signed_message", string(value)).Msg("Error parsing sync_response")
 				return
 			}
 			go state.peerState.UpdateState(sm)
