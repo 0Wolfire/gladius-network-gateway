@@ -211,8 +211,14 @@ func (p *Peer) GetContentLinks(contentList []string) map[string][]string {
 
 // Builds a URL to a node
 func (p *Peer) createContentLink(nodeAddress, contentFileName string) string {
-	nodeIP := p.GetState().GetNodeField(nodeAddress, "ip_address").(*state.SignedField).Data
-	nodePort := p.GetState().GetNodeField(nodeAddress, "http_port").(*state.SignedField).Data
+	nodeIP := p.GetState().GetNodeField(nodeAddress, "ip_address")
+	nodePort := p.GetState().GetNodeField(nodeAddress, "http_port")
+	if nodeIP == nil || nodePort == nil {
+		return ""
+	}
+
+	nodeIP = nodeIP.(*state.SignedField).Data
+	nodePort = nodePort.(*state.SignedField).Data
 
 	contentData := strings.Split(contentFileName, "/")
 	u := url.URL{}
