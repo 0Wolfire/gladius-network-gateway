@@ -32,7 +32,6 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 			fmt.Println(err)
 		}
 	case "sync_request":
-		log.Debug().Msg("Got sync request")
 		smList := state.peerState.GetSignatureList()
 		b, err := json.Marshal(smList)
 		if err != nil {
@@ -41,16 +40,16 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 		ctx.Reply(ctx.Legion.NewMessage("sync_response", b))
 	case "sync_response":
 		smListBytes := ctx.Message.Body()
-		log.Debug().Str("signed_message", string(smListBytes)).Msg("Got sync response")
 		jsonparser.ArrayEach(smListBytes, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 			sm, err := parseSignedMessage(value)
 			if err != nil {
-				log.Debug().Str("signed_message", string(value)).Msg("Error parsing sync_response")
 				return
 			}
 			go func() {
 				err := state.peerState.UpdateState(sm)
-				log.Error().Err(err).Msg("Error updating state from sync_response")
+				if err != nil {
+					log.Error().Err(err).Msg("Error updating state from sync_response")
+				}
 			}()
 		})
 	}
