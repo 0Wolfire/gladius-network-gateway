@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/buger/jsonparser"
+	"github.com/rs/zerolog/log"
+
 	"github.com/gladiusio/legion/network"
 
 	"github.com/gladiusio/gladius-network-gateway/pkg/p2p/signature"
@@ -30,6 +32,7 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 			fmt.Println(err)
 		}
 	case "sync_request":
+		log.Debug().Msg("Got sync request")
 		smList := state.peerState.GetSignatureList()
 		smStringList := make([]string, 0)
 		for _, sm := range smList {
@@ -39,6 +42,7 @@ func (state *StatePlugin) NewMessage(ctx *network.MessageContext) {
 		b, _ := json.Marshal(smStringList)
 		ctx.Reply(ctx.Legion.NewMessage("sync_response", b))
 	case "sync_response":
+		log.Debug().Msg("Got sync response")
 		smListBytes := ctx.Message.Body()
 		jsonparser.ArrayEach(smListBytes, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 			sm, err := parseSignedMessage(value)
