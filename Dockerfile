@@ -8,8 +8,8 @@ FROM alpine
 RUN apk --no-cache --update upgrade && apk --no-cache add ca-certificates
 WORKDIR /app
 
-VOLUME /root/.gladius/wallet
 VOLUME /root/.gladius
+VOLUME /root/.gladius/wallet
 
 COPY --from=build-env /src/gladius-network-gateway /app/
 ENTRYPOINT ./gladius-network-gateway
