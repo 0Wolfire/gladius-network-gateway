@@ -15,7 +15,7 @@ upnpenabled = false
   marketaddress = "0x27a9390283236f836a0b3c8dfdbed2ed854322fc"
   poolmanageraddress = "0x9717EaDbfE344457135a4f1fA8AE3B11B4CAB0b7"
   poolurl = "http://174.138.111.1/api/"
-  provider = "https://mainnet.infura.io/tjqLYxxGIUp0NylVCiWw"
+  provider = "https://mainnet.infura.io/v3/1d3545f907ff4598893997c522e46676"
 
 # Change the logger
 [log]

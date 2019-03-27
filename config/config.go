@@ -51,14 +51,14 @@ func buildOptions(base string) {
 	ConfigOption("P2P.MessageVerifyOverride", false)
 
 	// Blockchain options
-	ConfigOption("Blockchain.Provider", "https://mainnet.infura.io/tjqLYxxGIUp0NylVCiWw")
+	ConfigOption("Blockchain.Provider", "https://mainnet.infura.io/v3/1d3545f907ff4598893997c522e46676")
 	ConfigOption("Blockchain.MarketAddress", "0x27a9390283236f836a0b3c8dfdbed2ed854322fc")
 	ConfigOption("Blockchain.PoolUrl", "http://174.138.111.1/api/")
 	ConfigOption("Blockchain.PoolManagerAddress", "0x9717EaDbfE344457135a4f1fA8AE3B11B4CAB0b7")
 
 	// Wallet options
 	ConfigOption("Wallet.Directory", filepath.Join(base, "wallet"))
-	ConfigOption("Wallet.Passphrase", "")  // Only should be used for automated deployment
+	ConfigOption("Wallet.Passphrase", "") // Only should be used for automated deployment
 
 	// Pool
 	ConfigOption("Pool.AutoJoin", false)
